@@ -3,16 +3,21 @@ spring.main.allow-bean-definition-overriding: true
 resilience4j.circuitbreaker:
   configs:
     default:
-      failureRateThreshold: 50 #??? ??? ?? ??
-      slowCallRateThreshold: 100 #??? ??? ?? ?? ??(??: slowCallDUrationThreshold)
+      failureRateThreshold: 50 #회로를 open할 실패율
+      slowCallRateThreshold: 100 #회로를 open할 느린호출 비율(??: slowCallDUrationThreshold)
       slowCallDurationThreshold: 60000 #[ms]
-      permittedNumberOfCallsInHalfOpenState: 4 #??? half-open ??? ?, ???? ??? ??
-      maxWaitDurationInHalfOpenState: 1000 #??? half-open ??? ?, ???? ??? ?? ???? ??
-      slidingWindowType: COUNT_BASED #???? ??? ???? ????, ???? ? ??
+      permittedNumberOfCallsInHalfOpenState: 4 #half-open 상태에서, 허용할 호출 수
+      maxWaitDurationInHalfOpenState: 1000 #half-open 상태에서, 허용할 타임아웃 시간
+      slidingWindowType: COUNT_BASED #회로의 sliding window 기반으로 시간기반, 횟수기반이 존재
       slidingWindowSize: 10
-      minimumNumberOfCalls: 5 #????? ???? ??? ??? ?? ?? ?
-      waitDurationInOpenState: 10000 #[ms] open -> half-open?? ???? ? ???? ??
+      minimumNumberOfCalls: 5 #실패율과 느린호출 비율을 계산할 최소 호출 수
+      waitDurationInOpenState: 10000 #[ms] open -> half-open가 되기 전 대기하는 시간
   instances:
     test:
       baseConfig: default
-
+resilience4j:
+  bulkhead:
+    configs:
+      default:
+        maxConcurrentCalls: 1 # 동시에 1개만 실행
+        maxWaitDuration: 0 # maxConcurrentCalls를 모두 사용중일 때 대기할 수 있는 시간

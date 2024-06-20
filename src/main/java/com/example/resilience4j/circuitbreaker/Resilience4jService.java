@@ -29,4 +29,11 @@ public class Resilience4jService {
     private String circuitBreakerTestFallback(CallNotPermittedException t){
         return "circuit open";
     }
+
+
+    public String bulkheadTest() throws InterruptedException {
+        Thread.sleep(10000);
+
+        return "hello world";
+    }
 }
