@@ -25,4 +25,9 @@ public class Resilience4jController {
     public String bulkhead() throws InterruptedException {
         return resilience4jService.bulkhead();
     }
+
+    @GetMapping("/rate-limiter")
+    public String rateLimiter(){
+        return resilience4jService.rateLimiter();
+    }
 }

@@ -4,6 +4,7 @@ package com.example.resilience4j.circuitbreaker;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -50,5 +51,16 @@ public class Resilience4jService {
     private String bulkheadTestFallback(RuntimeException t){
         System.out.println(t.getMessage());
         return "Max Concurrent Calls";
+    }
+
+
+    @RateLimiter(name="rateLimiterTest", fallbackMethod = "rateLimiterFallback")
+    public String rateLimiter(){
+        return "hello world";
+    }
+
+    private String rateLimiterFallback(RuntimeException t){
+        System.out.println(t.getMessage());
+        return "Max Call In Cycle";
     }
 }
