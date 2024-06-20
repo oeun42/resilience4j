@@ -11,14 +11,18 @@ public class Resilience4jController {
     @Autowired
     private Resilience4jService resilience4jService;
 
-    @GetMapping("/circuit-breaker")
-    public String circuitBreakerTest() throws Exception {
-        return resilience4jService.circuitBreakerTest();
+    @GetMapping("/circuit-breaker/failure-rate")
+    public String circuitBreakerFailure() throws Exception {
+        return resilience4jService.circuitBreakerFailure();
+    }
+
+    @GetMapping("/circuit-breaker/slow-call-rate")
+    public String circuitBreakerSlowCall() throws Exception {
+        return resilience4jService.circuitBreakerSlowCall();
     }
 
     @GetMapping("/bulkhead")
-    @Bulkhead(name="bulkheadTest", type = Bulkhead.Type.SEMAPHORE)
-    public String bulkheadTest() throws InterruptedException {
-        return resilience4jService.bulkheadTest();
+    public String bulkhead() throws InterruptedException {
+        return resilience4jService.bulkhead();
     }
 }

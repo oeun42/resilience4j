@@ -4,8 +4,8 @@ resilience4j.circuitbreaker:
   configs:
     default:
       failureRateThreshold: 50 #회로를 open할 실패율
-      slowCallRateThreshold: 100 #회로를 open할 느린호출 비율(??: slowCallDUrationThreshold)
-      slowCallDurationThreshold: 60000 #[ms]
+      slowCallRateThreshold: 50 #회로를 open할 느린호출 비율(??: slowCallDUrationThreshold)
+      slowCallDurationThreshold: 1000 #[ms]
       permittedNumberOfCallsInHalfOpenState: 4 #half-open 상태에서, 허용할 호출 수
       maxWaitDurationInHalfOpenState: 1000 #half-open 상태에서, 허용할 타임아웃 시간
       slidingWindowType: COUNT_BASED #회로의 sliding window 기반으로 시간기반, 횟수기반이 존재
